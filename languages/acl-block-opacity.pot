@@ -1,0 +1,25 @@
+# Copyright (C) 2026 Ashes Creative Labs
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: ACL Opacity Controls for Blocks 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: acl-block-opacity\n"
+
+#. Plugin Name of the plugin
+#: acl-block-opacity.php
+msgid "ACL Opacity Controls for Blocks"
+msgstr ""
+
+#. Description of the plugin
+#: acl-block-opacity.php
+msgid "Development foundation for standard text and background opacity controls in the WordPress block editor."
+msgstr ""
+
+#. Author of the plugin
+#: acl-block-opacity.php
+msgid "Ashes Creative Labs"
+msgstr ""

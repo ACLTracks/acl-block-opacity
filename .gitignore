@@ -1,0 +1,11 @@
+/node_modules/
+/vendor/
+/.tools/
+/.wp-env/
+/.phpunit.cache/
+/.phpunit.result.cache
+/coverage/
+/*.log
+/.env
+/.env.*
+!.env.example

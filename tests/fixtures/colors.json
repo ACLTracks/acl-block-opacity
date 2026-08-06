@@ -1,0 +1,232 @@
+{
+  "accepted": [
+    {
+      "input": "#abc",
+      "normalized": {
+        "space": "srgb",
+        "red": 170,
+        "green": 187,
+        "blue": 204,
+        "alpha": 1,
+        "syntax": "hex"
+      },
+      "formats": {
+        "0": "rgba(170, 187, 204, 0)",
+        "42": "rgba(170, 187, 204, 0.42)",
+        "100": "rgb(170, 187, 204)"
+      }
+    },
+    {
+      "input": "#abcd",
+      "normalized": {
+        "space": "srgb",
+        "red": 170,
+        "green": 187,
+        "blue": 204,
+        "alpha": 0.866667,
+        "syntax": "hex"
+      },
+      "formats": {
+        "0": "rgba(170, 187, 204, 0)",
+        "42": "rgba(170, 187, 204, 0.42)",
+        "100": "rgb(170, 187, 204)"
+      }
+    },
+    {
+      "input": "#A1B2C3",
+      "normalized": {
+        "space": "srgb",
+        "red": 161,
+        "green": 178,
+        "blue": 195,
+        "alpha": 1,
+        "syntax": "hex"
+      },
+      "formats": {
+        "0": "rgba(161, 178, 195, 0)",
+        "42": "rgba(161, 178, 195, 0.42)",
+        "100": "rgb(161, 178, 195)"
+      }
+    },
+    {
+      "input": "#A1B2C380",
+      "normalized": {
+        "space": "srgb",
+        "red": 161,
+        "green": 178,
+        "blue": 195,
+        "alpha": 0.501961,
+        "syntax": "hex"
+      },
+      "formats": {
+        "0": "rgba(161, 178, 195, 0)",
+        "42": "rgba(161, 178, 195, 0.42)",
+        "100": "rgb(161, 178, 195)"
+      }
+    },
+    {
+      "input": "rgb(0, 127.5, 255)",
+      "normalized": {
+        "space": "srgb",
+        "red": 0,
+        "green": 127.5,
+        "blue": 255,
+        "alpha": 1,
+        "syntax": "legacy-rgb"
+      },
+      "formats": {
+        "0": "rgba(0, 127.5, 255, 0)",
+        "42": "rgba(0, 127.5, 255, 0.42)",
+        "100": "rgb(0, 127.5, 255)"
+      }
+    },
+    {
+      "input": "rgb(0%, 50%, 100%)",
+      "normalized": {
+        "space": "srgb",
+        "red": 0,
+        "green": 127.5,
+        "blue": 255,
+        "alpha": 1,
+        "syntax": "legacy-rgb"
+      },
+      "formats": {
+        "0": "rgba(0, 127.5, 255, 0)",
+        "42": "rgba(0, 127.5, 255, 0.42)",
+        "100": "rgb(0, 127.5, 255)"
+      }
+    },
+    {
+      "input": "rgba(12, 34, 56, 0.25)",
+      "normalized": {
+        "space": "srgb",
+        "red": 12,
+        "green": 34,
+        "blue": 56,
+        "alpha": 0.25,
+        "syntax": "legacy-rgba"
+      },
+      "formats": {
+        "0": "rgba(12, 34, 56, 0)",
+        "42": "rgba(12, 34, 56, 0.42)",
+        "100": "rgb(12, 34, 56)"
+      }
+    },
+    {
+      "input": "rgba(10%, 20%, 30%, 75%)",
+      "normalized": {
+        "space": "srgb",
+        "red": 25.5,
+        "green": 51,
+        "blue": 76.5,
+        "alpha": 0.75,
+        "syntax": "legacy-rgba"
+      },
+      "formats": {
+        "0": "rgba(25.5, 51, 76.5, 0)",
+        "42": "rgba(25.5, 51, 76.5, 0.42)",
+        "100": "rgb(25.5, 51, 76.5)"
+      }
+    },
+    {
+      "input": "rgb(1 2 3)",
+      "normalized": {
+        "space": "srgb",
+        "red": 1,
+        "green": 2,
+        "blue": 3,
+        "alpha": 1,
+        "syntax": "modern-rgb"
+      },
+      "formats": {
+        "0": "rgba(1, 2, 3, 0)",
+        "42": "rgba(1, 2, 3, 0.42)",
+        "100": "rgb(1, 2, 3)"
+      }
+    },
+    {
+      "input": "rgb(10% 20 30% / 12.5%)",
+      "normalized": {
+        "space": "srgb",
+        "red": 25.5,
+        "green": 20,
+        "blue": 76.5,
+        "alpha": 0.125,
+        "syntax": "modern-rgb"
+      },
+      "formats": {
+        "0": "rgba(25.5, 20, 76.5, 0)",
+        "42": "rgba(25.5, 20, 76.5, 0.42)",
+        "100": "rgb(25.5, 20, 76.5)"
+      }
+    },
+    {
+      "input": "rgba(255 0 127.5 / 25%)",
+      "normalized": {
+        "space": "srgb",
+        "red": 255,
+        "green": 0,
+        "blue": 127.5,
+        "alpha": 0.25,
+        "syntax": "modern-rgba"
+      },
+      "formats": {
+        "0": "rgba(255, 0, 127.5, 0)",
+        "42": "rgba(255, 0, 127.5, 0.42)",
+        "100": "rgb(255, 0, 127.5)"
+      }
+    },
+    {
+      "input": "RGB(1e2 2.5e1 .5 / 5e-1)",
+      "normalized": {
+        "space": "srgb",
+        "red": 100,
+        "green": 25,
+        "blue": 0.5,
+        "alpha": 0.5,
+        "syntax": "modern-rgb"
+      },
+      "formats": {
+        "0": "rgba(100, 25, 0.5, 0)",
+        "42": "rgba(100, 25, 0.5, 0.42)",
+        "100": "rgb(100, 25, 0.5)"
+      }
+    }
+  ],
+  "rejected": [
+    "",
+    " ",
+    "#12",
+    "#12345",
+    "#ggg",
+    "rgb()",
+    "rgb(, 2, 3)",
+    "rgb(1, , 3)",
+    "rgba(1, 2, 3, )",
+    "rgb(1 2 3 / )",
+    "rgb(1 2 / 0.5)",
+    "rgb(1 2 3 / 0.5 / 0.6)",
+    "rgb(1, 2, 3 / 0.5)",
+    "rgb(1 2 3 0.5)",
+    "rgb(1, 2, 3, 0.5)",
+    "rgba(1, 2, 3)",
+    "rgb(10%, 20, 30%)",
+    "rgba(10%, 20%, 30, 0.5)",
+    "rgb(-1, 0, 0)",
+    "rgb(256, 0, 0)",
+    "rgb(101% 0% 0%)",
+    "rgba(0, 0, 0, -0.1)",
+    "rgba(0, 0, 0, 1.1)",
+    "rgb(1e309 0 0)",
+    "hsl(0 100% 50%)",
+    "hwb(0 0% 0%)",
+    "lab(50% 0 0)",
+    "lch(50% 0 0)",
+    "color(display-p3 1 0 0)",
+    "color-mix(in srgb, red, blue)",
+    "var(--wp--preset--color--contrast)",
+    "transparent",
+    "red",
+    "calc(1 + 2)"
+  ]
+}

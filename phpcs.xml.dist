@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="ACL Block Opacity">
+	<description>WordPress Coding Standards for ACL Opacity Controls for Blocks.</description>
+
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+	<arg value="ps"/>
+
+	<file>acl-block-opacity.php</file>
+	<file>includes</file>
+	<file>tests/php</file>
+
+	<exclude-pattern>vendor/*</exclude-pattern>
+
+	<rule ref="WordPress"/>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress-Extra"/>
+
+	<!-- The project specification requires WordPress-style test-*.php names. -->
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
+		<exclude-pattern>tests/php/test-*.php</exclude-pattern>
+	</rule>
+</ruleset>

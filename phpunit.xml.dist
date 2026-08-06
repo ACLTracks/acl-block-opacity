@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+	bootstrap="tests/php/bootstrap.php"
+	cacheResult="false"
+	colors="true"
+	failOnRisky="true"
+	failOnWarning="true"
+>
+	<testsuites>
+		<testsuite name="ACL Block Opacity foundation">
+			<file>tests/php/test-color-value.php</file>
+			<file>tests/php/test-compatibility-bridge.php</file>
+		</testsuite>
+	</testsuites>
+</phpunit>
