@@ -4,22 +4,26 @@ ACL Opacity Controls for Blocks is a standalone WordPress plugin project by Ashe
 
 ## Development status
 
-This repository currently contains the tested Phase 2 foundation only:
+This repository currently contains the tested Phase 3 editor integration:
 
 - strict JavaScript and PHP RGB color parsing and deterministic formatting;
 - pure standard-attribute persistence utilities;
 - conservative block eligibility utilities with complete Cover exclusion;
 - palette resolution with explicit custom, theme, and default precedence;
+- accessible Text opacity and Background opacity controls for selected eligible blocks;
+- effective block-context palette subscriptions through the public `useSettings` API;
+- explicit guidance for missing, unsupported, unresolved-preset, and gradient-blocked states;
+- atomic updates through standard WordPress color attributes;
 - namespaced PHP bootstrap and generated editor-asset metadata support;
-- isolated unit tests and development tooling.
+- automated utility, state, registration, component, accessibility, and PHP tests.
 
-The editor controls, immediate preview, compatibility render bridge, browser end-to-end validation, release packaging, and production compatibility matrix are not implemented yet. This is not a production release.
+The compatibility render bridge, browser end-to-end validation, editor/frontend computed-style parity, save and reload flows, theme switching, activation and deactivation, release packaging, and production compatibility matrix have not been validated yet. This is not a production release.
 
 No WordPress or PHP compatibility floor has been approved. The future GitHub repository `ACLTracks/acl-block-opacity` does not exist yet.
 
 ## Persistence contract
 
-The finished plugin will persist only standard `style.color.text` and `style.color.background` values while clearing the mutually exclusive `textColor` or `backgroundColor` preset attribute during preset conversion. It will not store proprietary opacity attributes, compatibility markers, settings, telemetry, or database records.
+The editor controls persist only standard `style.color.text` and `style.color.background` values while clearing the mutually exclusive `textColor` or `backgroundColor` preset attribute during preset conversion. They do not store proprietary opacity attributes, compatibility markers, settings, telemetry, or database records. Background gradients remain untouched and block only the Background opacity control.
 
 ## Source boundary
 

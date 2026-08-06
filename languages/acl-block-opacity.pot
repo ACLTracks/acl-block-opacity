@@ -3,10 +3,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ACL Opacity Controls for Blocks 1.0.0\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acl-block-opacity\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-06T21:12:10+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: acl-block-opacity\n"
 
 #. Plugin Name of the plugin
@@ -16,10 +21,67 @@ msgstr ""
 
 #. Description of the plugin
 #: acl-block-opacity.php
-msgid "Development foundation for standard text and background opacity controls in the WordPress block editor."
+msgid "Adds text and background opacity controls to eligible blocks using standard WordPress color attributes."
 msgstr ""
 
 #. Author of the plugin
 #: acl-block-opacity.php
 msgid "Ashes Creative Labs"
+msgstr ""
+
+#. Author URI of the plugin
+#: acl-block-opacity.php
+msgid "https://acltracks.com/"
+msgstr ""
+
+#: src/components/opacity-controls.js:71
+msgid "The selected color preset is unavailable in the current theme."
+msgstr ""
+
+#: src/components/opacity-controls.js:79
+msgid "This text color format cannot be adjusted safely."
+msgstr ""
+
+#: src/components/opacity-controls.js:83
+msgid "This background color format cannot be adjusted safely."
+msgstr ""
+
+#: src/components/opacity-controls.js:89
+msgid "Remove the background gradient to adjust background opacity."
+msgstr ""
+
+#: src/components/opacity-controls.js:96
+msgid "Choose a text color to adjust its opacity."
+msgstr ""
+
+#: src/components/opacity-controls.js:100
+msgid "Choose a background color to adjust its opacity."
+msgstr ""
+
+#: src/components/opacity-controls.js:134
+msgid "Text opacity"
+msgstr ""
+
+#: src/components/opacity-controls.js:135
+msgid "Background opacity"
+msgstr ""
+
+#: src/components/opacity-controls.js:137
+msgid "Adjust the text color opacity."
+msgstr ""
+
+#: src/components/opacity-controls.js:138
+msgid "Adjust the background color opacity."
+msgstr ""
+
+#: src/components/opacity-controls.js:142
+msgid "At 0%, the text will be invisible."
+msgstr ""
+
+#: src/components/opacity-controls.js:143
+msgid "At 0%, the background color will be transparent."
+msgstr ""
+
+#: src/components/opacity-controls.js:189
+msgid "Opacity"
 msgstr ""

@@ -1,4 +1,7 @@
-import { getColorEligibility } from '../../src/utils/eligibility';
+import {
+	getBlockNameGate,
+	getColorEligibility,
+} from '../../src/utils/eligibility';
 
 const standardAttributes = {
 	style: { type: 'object' },
@@ -111,5 +114,28 @@ describe( 'getColorEligibility', () => {
 		expect(
 			getColorEligibility( createBlockType( true, {} ) ).eligible
 		).toBe( false );
+	} );
+} );
+
+describe( 'getBlockNameGate', () => {
+	test( 'allows a valid block before type lookup', () => {
+		expect( getBlockNameGate( 'core/paragraph' ) ).toEqual( {
+			allowed: true,
+			reason: 'allowed',
+		} );
+	} );
+
+	test( 'rejects invalid, Cover, and explicit incompatible names', () => {
+		expect( getBlockNameGate( 'invalid' ).reason ).toBe(
+			'invalid-block-name'
+		);
+		expect( getBlockNameGate( 'core/cover' ).reason ).toBe(
+			'cover-excluded'
+		);
+		expect(
+			getBlockNameGate( 'example/incompatible', {
+				incompatibleBlocks: [ 'example/incompatible' ],
+			} ).reason
+		).toBe( 'explicitly-incompatible' );
 	} );
 } );

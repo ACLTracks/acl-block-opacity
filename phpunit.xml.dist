@@ -8,6 +8,7 @@
 >
 	<testsuites>
 		<testsuite name="ACL Block Opacity foundation">
+			<file>tests/php/test-assets.php</file>
 			<file>tests/php/test-color-value.php</file>
 			<file>tests/php/test-compatibility-bridge.php</file>
 		</testsuite>

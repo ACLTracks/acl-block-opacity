@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: ACL Opacity Controls for Blocks
- * Description: Development foundation for standard text and background opacity controls in the WordPress block editor.
+ * Description: Adds text and background opacity controls to eligible blocks using standard WordPress color attributes.
  * Version: 1.0.0
  * Author: Ashes Creative Labs
  * Author URI: https://acltracks.com/

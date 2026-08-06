@@ -69,6 +69,34 @@ function isExplicitlyIncompatible( collection, name ) {
 }
 
 /**
+ * Apply the cheap name-only gate used before block-type lookup or hooks.
+ *
+ * @param {*}                         name
+ * @param {Object}                    [options]
+ * @param {Array<string>|Set<string>} [options.incompatibleBlocks]
+ * @return {{ allowed: boolean, reason: string }} Gate result.
+ */
+export function getBlockNameGate( name, options = {} ) {
+	if ( typeof name !== 'string' || ! BLOCK_NAME_PATTERN.test( name ) ) {
+		return { allowed: false, reason: 'invalid-block-name' };
+	}
+
+	if ( name === 'core/cover' ) {
+		return { allowed: false, reason: 'cover-excluded' };
+	}
+
+	const incompatibleBlocks = isRecord( options )
+		? options.incompatibleBlocks
+		: undefined;
+
+	if ( isExplicitlyIncompatible( incompatibleBlocks, name ) ) {
+		return { allowed: false, reason: 'explicitly-incompatible' };
+	}
+
+	return { allowed: true, reason: 'allowed' };
+}
+
+/**
  * Compute eligibility for both supported standard color channels.
  *
  * @param {Object}                    blockType
@@ -87,31 +115,14 @@ export function getColorEligibility( blockType, options = {} ) {
 	}
 
 	const name = blockType.name;
+	const nameGate = getBlockNameGate( name, options );
 
-	if ( ! BLOCK_NAME_PATTERN.test( name ) ) {
+	if ( ! nameGate.allowed ) {
 		return {
 			eligible: false,
 			text: false,
 			background: false,
-			reason: 'invalid-block-name',
-		};
-	}
-
-	if ( name === 'core/cover' ) {
-		return {
-			eligible: false,
-			text: false,
-			background: false,
-			reason: 'cover-excluded',
-		};
-	}
-
-	if ( isExplicitlyIncompatible( options.incompatibleBlocks, name ) ) {
-		return {
-			eligible: false,
-			text: false,
-			background: false,
-			reason: 'explicitly-incompatible',
+			reason: nameGate.reason,
 		};
 	}
 
