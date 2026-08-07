@@ -148,6 +148,7 @@ function OpacityChannel( { attributes, channel, setAttributes, state } ) {
 
 	return (
 		<RangeControl
+			__next40pxDefaultSize
 			help={ help }
 			label={ label }
 			max={ 100 }

@@ -5,6 +5,8 @@
 /.phpunit.cache/
 /.phpunit.result.cache
 /coverage/
+/tests/e2e/.auth/
+/tests/e2e/evidence/
 /*.log
 /.env
 /.env.*

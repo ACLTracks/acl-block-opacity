@@ -24,12 +24,22 @@ jest.mock( '@wordpress/components', () => ( {
 			{ children }
 		</section>
 	),
-	RangeControl: ( { help, label, max, min, onChange, step, value } ) => (
+	RangeControl: ( {
+		__next40pxDefaultSize,
+		help,
+		label,
+		max,
+		min,
+		onChange,
+		step,
+		value,
+	} ) => (
 		<div>
 			<label htmlFor={ `${ label }-range` }>
 				{ label }
 				<input
 					aria-label={ label }
+					data-next40px-default-size={ __next40pxDefaultSize }
 					id={ `${ label }-range` }
 					max={ max }
 					min={ min }
@@ -126,6 +136,9 @@ describe( 'OpacityControls accessibility and visibility', () => {
 		expect( slider.getAttribute( 'min' ) ).toBe( '0' );
 		expect( slider.getAttribute( 'max' ) ).toBe( '100' );
 		expect( slider.getAttribute( 'step' ) ).toBe( '1' );
+		expect( slider.getAttribute( 'data-next40px-default-size' ) ).toBe(
+			'true'
+		);
 		expect(
 			view.getByRole( 'spinbutton', { name: 'Text opacity value' } )
 		).toBeTruthy();

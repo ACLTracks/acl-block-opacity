@@ -4,7 +4,7 @@ ACL Opacity Controls for Blocks is a standalone WordPress plugin project by Ashe
 
 ## Development status
 
-This repository currently contains the tested Phase 3 editor integration:
+This repository currently contains the tested Phase 4 editor integration and real-WordPress validation:
 
 - strict JavaScript and PHP RGB color parsing and deterministic formatting;
 - pure standard-attribute persistence utilities;
@@ -16,8 +16,11 @@ This repository currently contains the tested Phase 3 editor integration:
 - atomic updates through standard WordPress color attributes;
 - namespaced PHP bootstrap and generated editor-asset metadata support;
 - automated utility, state, registration, component, accessibility, and PHP tests.
+- serial Playwright coverage against WordPress 7.0.3 for editor, persistence, frontend, patterns, nesting, palette context, theme switching, and deactivation behavior.
 
-The compatibility render bridge, browser end-to-end validation, editor/frontend computed-style parity, save and reload flows, theme switching, activation and deactivation, release packaging, and production compatibility matrix have not been validated yet. This is not a production release.
+The Phase 4 browser matrix passed 12 automated scenarios plus a development-only clipboard, keyboard, and 200%-scaling check. It also proved a real editor/frontend conflict when a theme defines the palette slug `text`: WordPress's generated important `.has-text-color` rule can override a saved literal text color. ACL Trace 3.0.8 already mitigates its frontend independently, but the standalone compatibility bridge remains deferred to Phase 5. See [the browser-validation record](docs/browser-validation.md).
+
+Release packaging, broader compatibility testing, the standalone compatibility bridge, and the production compatibility matrix have not been completed. This is not a production release.
 
 No WordPress or PHP compatibility floor has been approved. The future GitHub repository `ACLTracks/acl-block-opacity` does not exist yet.
 

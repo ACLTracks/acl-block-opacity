@@ -1,11 +1,14 @@
 /.git
 /.github
+/.distignore
 /.wp-env
 /node_modules
 /vendor
 /.tools
 /src
 /tests
+/tests/e2e/.auth
+/tests/e2e/evidence
 /.editorconfig
 /.gitattributes
 /.gitignore
@@ -16,5 +19,7 @@
 /package-lock.json
 /phpcs.xml.dist
 /phpunit.xml.dist
+/playwright.config.js
+/docs/browser-validation.md
 /.phpunit.result.cache
 /*.log

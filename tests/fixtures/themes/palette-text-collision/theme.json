@@ -9,8 +9,26 @@
           "color": "#112233",
           "name": "Text Collision Fixture",
           "slug": "text"
+        },
+        {
+          "color": "#445566",
+          "name": "Shared Theme Fixture",
+          "slug": "phase4-shared"
         }
       ]
+    },
+    "blocks": {
+      "acl-opacity-e2e/standard-color": {
+        "color": {
+          "palette": [
+            {
+              "color": "#cc5500",
+              "name": "Block Context Fixture",
+              "slug": "phase4-shared"
+            }
+          ]
+        }
+      }
     }
   }
 }
