@@ -16,6 +16,7 @@ module.exports = async function globalSetup( config ) {
 	}
 
 	await fs.mkdir( path.dirname( storageStatePath ), { recursive: true } );
+	await fs.rm( storageStatePath, { force: true } );
 
 	await RequestUtils.setup( {
 		baseURL,

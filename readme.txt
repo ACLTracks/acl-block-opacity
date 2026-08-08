@@ -1,6 +1,10 @@
 === ACL Opacity Controls for Blocks ===
-Contributors:
-Stable tag: trunk
+Contributors: ashescreativelabs
+Tags: blocks, color, opacity, editor, accessibility
+Requires at least: 6.8
+Tested up to: 7.0
+Stable tag: 1.0.0
+Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -8,21 +12,23 @@ Accessible text and background opacity controls for eligible blocks in the WordP
 
 == Description ==
 
-ACL Opacity Controls for Blocks is under active development. The current project implements accessible Text opacity and Background opacity controls for selected eligible blocks. It uses block-context default, theme, and user palettes; strict color parsing; and standard WordPress color attributes. Cover is completely excluded, background gradients are left untouched, and no frontend JavaScript is loaded.
+ACL Opacity Controls for Blocks adds accessible 0-100 Text opacity and Background opacity controls to eligible blocks in the block editor. It uses the block's standard WordPress color attributes, so content remains portable and does not depend on proprietary opacity data.
 
-Automated unit coverage verifies registration, performance gating, palette state, atomic attribute updates, gradients, unavailable states, and accessibility semantics. Phase 4 real-WordPress testing also verified Inspector Controls, immediate preview, save/reload, undo/redo, copy/paste, patterns, nested blocks, frontend output, theme switching, activation/deactivation, keyboard use, and 200% responsive usability across a limited theme matrix.
+The controls resolve custom colors and default, theme, user, and applicable block-context palette presets. Changing a preset's opacity converts that channel to a literal standard color so the selected appearance is preserved. Supported values are 3-, 4-, 6-, and 8-digit hexadecimal colors and legacy or modern `rgb()`/`rgba()` values with numeric or percentage channels. Named colors, CSS variables, HSL, HWB, Lab, LCH, OKLab, OKLCH, `color()`, and mixed-unit RGB channels are left unchanged and receive guidance instead of an unsafe conversion.
 
-Testing reproduced a theme conflict when a palette uses the slug `text`: WordPress's generated important `.has-text-color` utility can override a standard saved literal text color. The Phase 5 bridge now detects that exact global, user, or applicable block-context condition and restores the validated literal through a conditional runtime class and CSS custom property. It uses public editor extensibility and `WP_HTML_Tag_Processor`, processes only the first block root, never searches descendants, and never changes saved block content.
+Cover is completely excluded. Background gradients are preserved and prevent only the Background opacity control. No whole-block, border, gradient, image, hover, or animation opacity is added.
 
-Normal themes without the collision slug remain unchanged and do not load compatibility CSS. Cover remains excluded. Deactivation preserves valid standard content, although the theme's conflicting visual result returns while the plugin is inactive. Blocks whose public root selector points to an inner element are conservatively not bridged. No universal theme compatibility is claimed.
+Some themes define a palette slug named `text`. WordPress can then generate an important `.has-text-color` rule that overrides a valid saved literal. The plugin conditionally restores that literal in the editor and frontend only when the proven global, user, or applicable block-context collision exists. It adds runtime-only markup to the block root, never saves compatibility markers, and loads no compatibility CSS when the collision is absent.
 
-Fresh Phase 5 testing found that ACL Trace 3.0.9 contains the collision and has no theme-local runtime mitigation; the generic bridge restores editor/frontend parity without ACL Trace-specific code. Broader compatibility testing, release packaging, and the production compatibility matrix have not been completed. There is no current production release and no approved WordPress or PHP compatibility floor.
+The compatibility bridge deliberately does not search descendants. For blocks such as core Button, whose public color target is an inner element rather than the block root, normal WordPress opacity behavior remains available, but the special `text`-slug collision is not rewritten. Switching to a theme that cannot resolve an old preset may make that preset unavailable until a valid color is selected. Literal colors created by an opacity change remain stable across theme switches.
 
-The project is standalone and does not require ACL Trace. Its experimental prototype is not the release source. No GitHub repository exists yet.
+The plugin has no settings screen, options, custom database tables, post or user metadata, telemetry, external service, remote request, or frontend JavaScript. Deactivation leaves standard block content valid. If the active theme has the `text`-slug collision, its visual conflict can return while the plugin is inactive and is corrected again after reactivation. Nothing plugin-specific requires cleanup on uninstall.
 
-Version 1.0.0 will not include whole-block, border, gradient, image, or hover opacity; animation; page-builder integrations; premium features; accounts; telemetry; or remote services.
+Version 1.0.0 was qualified on WordPress 6.8.7, 6.9.6, and 7.0.3; PHP 8.0.30 through 8.5.9; current Twenty Twenty-Five and Twenty Twenty-Four; ACL Trace 3.0.9; BlankSlate; and controlled palette fixtures. This is a tested compatibility matrix, not a claim of universal theme compatibility.
 
 == Changelog ==
 
 = 1.0.0 =
-* Editor integration, Phase 4 validation, and the conditional Phase 5 text-collision bridge are complete; not released.
+* Adds Text opacity and Background opacity controls for eligible blocks using standard WordPress color attributes.
+* Preserves Cover exclusion, gradients, portable saved content, and frontend output without frontend JavaScript.
+* Adds conditional handling for the proven `text` palette-slug collision without descendant rewriting.

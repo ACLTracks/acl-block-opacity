@@ -99,11 +99,19 @@ test.describe.serial( 'ACL Block Opacity text collision bridge', () => {
 				exact: true,
 			} )
 		);
-		const thirdParty = await inspectEditorElement(
-			editor.canvas.getByText( 'Block context third party', {
-				exact: true,
-			} )
+		const thirdPartyLocator = editor.canvas.getByText(
+			'Block context third party',
+			{ exact: true }
 		);
+
+		await expect
+			.poll(
+				async () =>
+					( await inspectEditorElement( thirdPartyLocator ) ).color
+			)
+			.toBe( 'rgba(200, 10, 20, 0.5)' );
+
+		const thirdParty = await inspectEditorElement( thirdPartyLocator );
 
 		expect( paragraph.className ).not.toContain( COMPATIBILITY_CLASS );
 		expect( paragraph.style ).not.toContain( COMPATIBILITY_PROPERTY );
@@ -240,17 +248,27 @@ test.describe.serial( 'ACL Block Opacity text collision bridge', () => {
 			] );
 		} );
 
-		const group = await editor.canvas
-			.getByText( 'Inherited group child', { exact: true } )
-			.evaluate( ( element ) => {
-				const root = element.closest( '.wp-block-group' );
+		const groupChild = editor.canvas.getByText( 'Inherited group child', {
+			exact: true,
+		} );
 
-				return {
-					className: root.className,
-					color: window.getComputedStyle( element ).color,
-					style: root.getAttribute( 'style' ),
-				};
-			} );
+		await expect
+			.poll( () =>
+				groupChild.evaluate(
+					( element ) => window.getComputedStyle( element ).color
+				)
+			)
+			.toBe( 'rgba(40, 50, 60, 0.6)' );
+
+		const group = await groupChild.evaluate( ( element ) => {
+			const root = element.closest( '.wp-block-group' );
+
+			return {
+				className: root.className,
+				color: window.getComputedStyle( element ).color,
+				style: root.getAttribute( 'style' ),
+			};
+		} );
 		const explicit = await inspectEditorElement(
 			editor.canvas.getByText( 'Explicit group child', { exact: true } )
 		);
@@ -458,11 +476,17 @@ test.describe.serial( 'ACL Block Opacity text collision bridge', () => {
 		createdPostIds.push( post.id );
 
 		await openPost( admin, page, post.id );
-		let editorState = await inspectEditorElement(
-			editor.canvas.getByText( 'Collision deactivation fixture', {
-				exact: true,
-			} )
+		const collisionFixture = editor.canvas.getByText(
+			'Collision deactivation fixture',
+			{ exact: true }
 		);
+		await expect
+			.poll(
+				async () =>
+					( await inspectEditorElement( collisionFixture ) ).color
+			)
+			.toBe( expected );
+		let editorState = await inspectEditorElement( collisionFixture );
 		expect( editorState.className ).toContain( COMPATIBILITY_CLASS );
 		expect( editorState.color ).toBe( expected );
 
@@ -504,11 +528,13 @@ test.describe.serial( 'ACL Block Opacity text collision bridge', () => {
 
 		await requestUtils.activatePlugin( PRODUCT_PLUGIN );
 		await openPost( admin, page, post.id );
-		editorState = await inspectEditorElement(
-			editor.canvas.getByText( 'Collision deactivation fixture', {
-				exact: true,
-			} )
-		);
+		await expect
+			.poll(
+				async () =>
+					( await inspectEditorElement( collisionFixture ) ).color
+			)
+			.toBe( expected );
+		editorState = await inspectEditorElement( collisionFixture );
 		expect( editorState.className ).toContain( COMPATIBILITY_CLASS );
 		expect( editorState.color ).toBe( expected );
 		await page.goto( inactive.link );
@@ -536,11 +562,17 @@ test.describe.serial( 'ACL Block Opacity text collision bridge', () => {
 		createdPostIds.push( post.id );
 
 		await openPost( admin, page, post.id );
-		const editorState = await inspectEditorElement(
-			editor.canvas.getByText( 'Premitigated collision fixture', {
-				exact: true,
-			} )
+		const premitigatedFixture = editor.canvas.getByText(
+			'Premitigated collision fixture',
+			{ exact: true }
 		);
+		await expect
+			.poll(
+				async () =>
+					( await inspectEditorElement( premitigatedFixture ) ).color
+			)
+			.toBe( expected );
+		const editorState = await inspectEditorElement( premitigatedFixture );
 		expect( editorState.className ).toContain( COMPATIBILITY_CLASS );
 		expect( editorState.color ).toBe( expected );
 

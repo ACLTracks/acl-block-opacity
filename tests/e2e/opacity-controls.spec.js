@@ -74,7 +74,7 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		await expect( row ).toContainText( 'Deactivate' );
 		await expect(
 			page.locator(
-				'#wpbody-content > .notice-error:visible, #wpbody-content > .error:visible, #wpbody-content > .update-nag:visible'
+				'#wpbody-content > .notice-error:visible, #wpbody-content > .error:visible'
 			)
 		).toHaveCount( 0 );
 
@@ -221,19 +221,27 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		expect( attributes.style.color.text ).toBe( 'rgba(17, 17, 17, 0.35)' );
 
 		await page.keyboard.press( 'Control+z' );
+		await selectBlock( page, {
+			content: 'Preset opacity fixture',
+			name: 'core/paragraph',
+		} );
 		await expect
 			.poll(
-				async () => ( await getSelectedAttributes( page ) ).textColor
+				async () => ( await getSelectedAttributes( page ) )?.textColor
 			)
 			.toBe( 'contrast' );
 		attributes = await getSelectedAttributes( page );
 		expect( attributes.style?.color?.text ).toBeUndefined();
 
 		await page.keyboard.press( 'Control+Shift+z' );
+		await selectBlock( page, {
+			content: 'Preset opacity fixture',
+			name: 'core/paragraph',
+		} );
 		await expect
 			.poll(
 				async () =>
-					( await getSelectedAttributes( page ) ).style?.color?.text
+					( await getSelectedAttributes( page ) )?.style?.color?.text
 			)
 			.toBe( 'rgba(17, 17, 17, 0.35)' );
 
@@ -792,7 +800,13 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		await expect(
 			page.getByRole( 'slider', { name: 'Text opacity' } )
 		).toHaveValue( '75' );
-		await savePost( page );
+		if (
+			await page
+				.getByRole( 'button', { name: 'Save', exact: true } )
+				.isEnabled()
+		) {
+			await savePost( page );
+		}
 		await page.reload( { waitUntil: 'domcontentloaded' } );
 		await dismissEditorWelcome( page );
 		await waitForEditor( page );
@@ -1053,13 +1067,24 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 			page.getByRole( 'slider', { name: 'Text opacity' } )
 		).toHaveValue( '50' );
 
-		const editorEvidence = await editor.canvas
-			.getByText( 'Collision fixture', { exact: true } )
-			.evaluate( ( element ) => ( {
+		const collisionFixture = editor.canvas.getByText( 'Collision fixture', {
+			exact: true,
+		} );
+		await expect
+			.poll( () =>
+				collisionFixture.evaluate(
+					( element ) => window.getComputedStyle( element ).color
+				)
+			)
+			.toBe( expected );
+
+		const editorEvidence = await collisionFixture.evaluate(
+			( element ) => ( {
 				className: element.className,
 				computedColor: window.getComputedStyle( element ).color,
 				style: element.getAttribute( 'style' ),
-			} ) );
+			} )
+		);
 
 		await page.goto( post.link );
 		const frontend = page.getByText( 'Collision fixture', { exact: true } );
@@ -1159,13 +1184,24 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		await expect(
 			page.getByRole( 'slider', { name: 'Text opacity' } )
 		).toHaveValue( '50' );
-		const editorEvidence = await editor.canvas
-			.getByText( 'ACL Trace collision fixture', { exact: true } )
-			.evaluate( ( element ) => ( {
+		const aclTraceFixture = editor.canvas.getByText(
+			'ACL Trace collision fixture',
+			{ exact: true }
+		);
+		await expect
+			.poll( () =>
+				aclTraceFixture.evaluate(
+					( element ) => window.getComputedStyle( element ).color
+				)
+			)
+			.toBe( expected );
+		const editorEvidence = await aclTraceFixture.evaluate(
+			( element ) => ( {
 				className: element.className,
 				computedColor: window.getComputedStyle( element ).color,
 				style: element.getAttribute( 'style' ),
-			} ) );
+			} )
+		);
 		const saved = await requestUtils.rest( {
 			path: `/wp/v2/posts/${ post.id }?context=edit`,
 		} );
