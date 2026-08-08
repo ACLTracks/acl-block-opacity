@@ -61,7 +61,7 @@ test.describe.serial( 'Installed release-candidate package', () => {
 			page.getByRole( 'row', {
 				name: /ACL Opacity Controls for Blocks.*Deactivate ACL Opacity Controls for Blocks/,
 			} )
-		).toContainText( 'Version 1.0.0' );
+		).toContainText( 'Version 1.0.1' );
 		await expect(
 			page.locator(
 				'#wpbody-content > .notice-error:visible, #wpbody-content > .error:visible'
