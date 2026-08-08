@@ -1,3 +1,3 @@
-/**
- * Reserved for a narrowly scoped compatibility bridge in a later phase.
- */
+.acl-block-opacity-compat-text.has-text-color[style*="--acl-block-opacity-text-color"] {
+	color: var(--acl-block-opacity-text-color) !important;
+}

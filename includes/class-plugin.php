@@ -30,13 +30,26 @@ final class Plugin {
 	private $assets;
 
 	/**
+	 * Conditional runtime compatibility service.
+	 *
+	 * @var Compatibility_Bridge
+	 */
+	private $compatibility_bridge;
+
+	/**
 	 * Construct the plugin services.
 	 *
 	 * @param string $plugin_file Absolute path to the main plugin file.
 	 */
 	private function __construct( string $plugin_file ) {
-		$this->plugin_file = $plugin_file;
-		$this->assets      = new Assets( $plugin_file );
+		$collision_detector = new Text_Collision_Detector();
+
+		$this->plugin_file          = $plugin_file;
+		$this->assets               = new Assets( $plugin_file, $collision_detector );
+		$this->compatibility_bridge = new Compatibility_Bridge(
+			$plugin_file,
+			$collision_detector
+		);
 	}
 
 	/**
@@ -49,6 +62,7 @@ final class Plugin {
 
 		add_action( 'init', array( $plugin, 'load_textdomain' ) );
 		$plugin->assets->register_hooks();
+		$plugin->compatibility_bridge->register_hooks();
 	}
 
 	/**

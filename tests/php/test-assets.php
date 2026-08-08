@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace AshesCreativeLabs\BlockOpacity\Tests;
 
 use AshesCreativeLabs\BlockOpacity\Assets;
+use AshesCreativeLabs\BlockOpacity\Text_Collision_Detector;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,12 +39,56 @@ final class Test_Assets extends TestCase {
 	public static $translations = array();
 
 	/**
+	 * Captured editor runtime configuration.
+	 *
+	 * @var array<int, array<int, mixed>>
+	 */
+	public static $inline_scripts = array();
+
+	/**
 	 * Reset captured calls.
 	 */
 	protected function setUp(): void {
-		self::$actions      = array();
-		self::$scripts      = array();
-		self::$translations = array();
+		self::$actions        = array();
+		self::$inline_scripts = array();
+		self::$scripts        = array();
+		self::$translations   = array();
+	}
+
+	/**
+	 * Block-context collision names are exposed before the editor bundle only.
+	 */
+	public function test_exposes_block_context_collision_names_to_editor(): void {
+		$root     = dirname( __DIR__, 2 );
+		$detector = new Text_Collision_Detector(
+			static function (): array {
+				return array(
+					'blocks' => array(
+						'acl-opacity-e2e/standard-color' => array(
+							'color' => array(
+								'palette' => array(
+									'theme' => array( array( 'slug' => 'text' ) ),
+								),
+							),
+						),
+					),
+				);
+			}
+		);
+		$assets   = new Assets( $root . '/acl-block-opacity.php', $detector );
+
+		$assets->enqueue_editor_assets();
+
+		self::assertSame(
+			array(
+				array(
+					'acl-block-opacity-editor',
+					'window.aclBlockOpacityCompatibility = Object.freeze({blockContexts:["acl-opacity-e2e\\/standard-color"]});',
+					'before',
+				),
+			),
+			self::$inline_scripts
+		);
 	}
 
 	/**

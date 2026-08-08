@@ -10,15 +10,44 @@ declare(strict_types=1);
 namespace AshesCreativeLabs\BlockOpacity;
 
 use AshesCreativeLabs\BlockOpacity\Tests\Test_Assets;
+use AshesCreativeLabs\BlockOpacity\Tests\Test_Compatibility_Bridge;
 
 /**
  * Capture WordPress hook registration inside the production namespace.
  *
  * @param string   $hook     Hook name.
  * @param callable $callback Hook callback.
+ * @param int      $priority Hook priority.
  */
-function add_action( string $hook, callable $callback ): void {
-	Test_Assets::$actions[] = array( $hook, $callback );
+function add_action( string $hook, callable $callback, int $priority = 10 ): void {
+	if ( is_array( $callback ) && $callback[0] instanceof Assets ) {
+		Test_Assets::$actions[] = array( $hook, $callback );
+		return;
+	}
+
+	Test_Compatibility_Bridge::$actions[] = array( $hook, $callback, $priority );
+}
+
+/**
+ * Capture render filter registration.
+ *
+ * @param string   $hook          Hook name.
+ * @param callable $callback      Hook callback.
+ * @param int      $priority      Hook priority.
+ * @param int      $accepted_args Accepted argument count.
+ */
+function add_filter(
+	string $hook,
+	callable $callback,
+	int $priority = 10,
+	int $accepted_args = 1
+): void {
+	Test_Compatibility_Bridge::$filters[] = array(
+		$hook,
+		$callback,
+		$priority,
+		$accepted_args,
+	);
 }
 
 /**
@@ -78,4 +107,52 @@ function wp_set_script_translations(
 	string $path
 ): void {
 	Test_Assets::$translations[] = array( $handle, $domain, $path );
+}
+
+/**
+ * Capture editor-only runtime configuration.
+ *
+ * @param string $handle   Script handle.
+ * @param string $data     Inline JavaScript.
+ * @param string $position Placement relative to the script.
+ */
+function wp_add_inline_script(
+	string $handle,
+	string $data,
+	string $position = 'after'
+): void {
+	Test_Assets::$inline_scripts[] = array( $handle, $data, $position );
+}
+
+/**
+ * Encode runtime settings like WordPress for the isolated harness.
+ *
+ * @param mixed $value Value to encode.
+ * @return string|false Encoded JSON.
+ */
+function wp_json_encode( $value ) {
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode -- Isolated stub implementation.
+	return json_encode( $value );
+}
+
+/**
+ * Capture a conditionally enqueued compatibility stylesheet.
+ *
+ * @param string        $handle  Style handle.
+ * @param string        $source  Style URL.
+ * @param array<string> $depends Style dependencies.
+ * @param string        $version Asset version.
+ */
+function wp_enqueue_style(
+	string $handle,
+	string $source,
+	array $depends,
+	string $version
+): void {
+	Test_Compatibility_Bridge::$styles[] = array(
+		$handle,
+		$source,
+		$depends,
+		$version,
+	);
 }

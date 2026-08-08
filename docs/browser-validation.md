@@ -1,4 +1,4 @@
-# Phase 4 browser validation
+# Phase 4 and Phase 5 browser validation
 
 This record covers the real-WordPress validation run performed on August 6, 2026. Versions below are test evidence, not declared compatibility floors.
 
@@ -76,3 +76,30 @@ After the finished-source 12/12 run and initial test teardown, the unrelated ins
 - LocalWP's intermittent 502 responses remain an environment limitation.
 - The live ACL Trace installation drifted to 3.0.9 after the defined matrix completed; only the earlier 3.0.8 run is part of the Phase 4 compatibility evidence.
 - The verified `text`-slug conflict is intentionally unresolved in Phase 4. No PHP render bridge, compatibility CSS, frontend script, runtime compatibility class, or saved-content marker was added.
+
+## Phase 5 conditional compatibility bridge
+
+Phase 5 re-ran the collision evidence gate before production changes. The controlled fixture still saved `style.color.text: rgba(200, 10, 20, 0.5)` with a `has-text-color` root, while editor and frontend both computed `rgb(17, 34, 51)`. The generated rule remained:
+
+```css
+.has-text-color { color: var(--wp--preset--color--text) !important; }
+```
+
+Fresh ACL Trace 3.0.9 evidence separately found the same standard saved literal and root state, the theme palette value `#F3ECF6`, editor/frontend computed `rgb(243, 236, 246)`, and no ACL Trace runtime mitigation class or custom property. This finding is specific to the tested 3.0.9 installation and is not inferred from the earlier 3.0.8 result.
+
+The implemented bridge is conditional and runtime-only:
+
+- PHP reads merged effective settings with `wp_get_global_settings()` and caches global and block-context collision checks for the request.
+- The frontend `render_block` filter validates standard `style.color.text`, rejects active `textColor`, rejects Cover, confirms standard text-color support, and changes only the first element through `WP_HTML_Tag_Processor`.
+- The editor uses `editor.BlockListBlock`, a cheap pre-hook candidate gate, `useSettings()` for global/user origins, and server-resolved merged block-context names for contexts unavailable outside `BlockEditContext`.
+- Positive roots receive `acl-block-opacity-compat-text` and `--acl-block-opacity-text-color` at runtime only.
+- Compatibility CSS is loaded through `enqueue_block_assets` only when a global or block-context `text` slug exists. No frontend JavaScript is loaded.
+- The selector targets the same element and includes the runtime style attribute for deterministic specificity against both global and block-context important utilities. It contains no descendant selector.
+
+Controlled fixture and ACL Trace 3.0.9 testing then computed the saved `rgba(200, 10, 20, 0.5)` value in both editor and frontend. REST content remained marker-free. A default theme without the slug received no runtime marker/property, no render mutation, and no compatibility stylesheet.
+
+Additional focused scenarios passed global/user and block-context detection, nested Group/Quote/List roots, explicit and inherited child colors, Cover exclusion, active-preset rejection, sibling Button isolation, a third-party standard-color root, deactivation/reactivation, and coexistence with a separate theme-side render mitigation. The premitigated theme and this plugin each added one independent runtime marker/property and produced the same final literal without warnings or saved-content changes.
+
+Core Button exposes the public root selector `.wp-block-button .wp-block-button__link`. Because that color target is not the first rendered block root, the compatibility bridge intentionally performs no mutation in editor or frontend. Its two tested siblings retained distinct standard literal values and received no compatibility marker/property; their visual collision remains a documented root-target limitation. The bridge does not add a descendant heuristic.
+
+While the plugin is active, collision-theme content is corrected. Deactivation removes only the runtime correction: the block stays valid and editable, its standard literal is unchanged, and the theme collision becomes visible again as expected. Reactivation restores the correction.

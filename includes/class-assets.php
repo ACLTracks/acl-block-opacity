@@ -23,12 +23,24 @@ final class Assets {
 	private $plugin_file;
 
 	/**
+	 * Optional block-context collision detector.
+	 *
+	 * @var Text_Collision_Detector|null
+	 */
+	private $collision_detector;
+
+	/**
 	 * Set the plugin entry point.
 	 *
-	 * @param string $plugin_file Absolute path to the main plugin file.
+	 * @param string                       $plugin_file        Absolute path to the main plugin file.
+	 * @param Text_Collision_Detector|null $collision_detector Optional collision detector.
 	 */
-	public function __construct( string $plugin_file ) {
-		$this->plugin_file = $plugin_file;
+	public function __construct(
+		string $plugin_file,
+		?Text_Collision_Detector $collision_detector = null
+	) {
+		$this->plugin_file        = $plugin_file;
+		$this->collision_detector = $collision_detector;
 	}
 
 	/**
@@ -69,6 +81,19 @@ final class Assets {
 			$asset['version'],
 			true
 		);
+
+		if ( null !== $this->collision_detector ) {
+			wp_add_inline_script(
+				$handle,
+				'window.aclBlockOpacityCompatibility = Object.freeze({' .
+					'blockContexts:' .
+					wp_json_encode(
+						$this->collision_detector->get_block_context_collision_names()
+					) .
+				'});',
+				'before'
+			);
+		}
 
 		wp_set_script_translations(
 			$handle,

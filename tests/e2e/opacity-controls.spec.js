@@ -78,6 +78,7 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 			)
 		).toHaveCount( 0 );
 
+		await requestUtils.activateTheme( 'twentytwentyfive' );
 		await page.goto( '/' );
 		await expect(
 			page.locator(
@@ -86,6 +87,9 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		).toHaveCount( 0 );
 		await expect(
 			page.locator( '[class*="acl-block-opacity"]' )
+		).toHaveCount( 0 );
+		await expect(
+			page.locator( 'link[href*="assets/css/compatibility.css"]' )
 		).toHaveCount( 0 );
 	} );
 
@@ -1024,7 +1028,7 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		).toHaveCount( 0 );
 	} );
 
-	test( 'reproduces the text-slug utility collision without mutating saved content', async ( {
+	test( 'corrects the text-slug utility collision without mutating saved content', async ( {
 		admin,
 		editor,
 		page,
@@ -1072,7 +1076,12 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 						.filter(
 							( rule ) =>
 								rule.includes( '.has-text-color' ) &&
-								rule.includes( '--wp--preset--color--text' )
+								( rule.includes(
+									'--wp--preset--color--text'
+								) ||
+									rule.includes(
+										'--acl-block-opacity-text-color'
+									) )
 						);
 				} catch {
 					return [];
@@ -1096,20 +1105,43 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		} );
 
 		expect( editorEvidence.className ).toContain( 'has-text-color' );
+		expect( editorEvidence.className ).toContain(
+			'acl-block-opacity-compat-text'
+		);
+		expect( editorEvidence.style ).toContain(
+			'--acl-block-opacity-text-color: rgba(200, 10, 20, 0.5)'
+		);
+		expect( editorEvidence.computedColor ).toBe( expected );
 		expect( frontendEvidence.className ).toContain( 'has-text-color' );
+		expect( frontendEvidence.className ).toContain(
+			'acl-block-opacity-compat-text'
+		);
+		expect( frontendEvidence.style ).toContain(
+			'--acl-block-opacity-text-color:rgba(200, 10, 20, 0.5)'
+		);
 		expect( saved.content.raw ).toContain( `"text":"${ expected }"` );
 		expect( saved.content.raw ).not.toContain( 'acl-block-opacity' );
 		expect( relevantThemeCss ).not.toHaveLength( 0 );
-		expect( frontendEvidence.computedColor ).toBe( 'rgb(17, 34, 51)' );
+		expect( relevantThemeCss ).toEqual(
+			expect.arrayContaining( [
+				expect.stringContaining( '--wp--preset--color--text' ),
+				expect.stringContaining( '--acl-block-opacity-text-color' ),
+			] )
+		);
+		expect( frontendEvidence.computedColor ).toBe( expected );
 	} );
 
-	test( 'records ACL Trace current editor and frontend collision behavior', async ( {
+	test( 'records ACL Trace 3.0.9 editor and frontend bridge behavior', async ( {
 		admin,
 		editor,
 		page,
 		requestUtils,
 	}, testInfo ) => {
 		await requestUtils.activateTheme( 'acl-trace' );
+		const theme = await requestUtils.rest( {
+			path: '/wp/v2/themes/acl-trace?context=edit',
+		} );
+		expect( theme.version ).toBe( '3.0.9' );
 		const expected = 'rgba(200, 10, 20, 0.5)';
 		const content = `<!-- wp:paragraph {"style":{"color":{"text":"${ expected }"}}} -->\n<p class="has-text-color" style="color:${ expected }">ACL Trace collision fixture</p>\n<!-- /wp:paragraph -->`;
 		const post = await createFixturePost(
@@ -1172,6 +1204,7 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 					frontend: frontendEvidence,
 					relevantThemeCss,
 					serialized: saved.content.raw,
+					themeVersion: theme.version,
 				},
 				null,
 				2
@@ -1180,13 +1213,16 @@ test.describe.serial( 'ACL Block Opacity in real WordPress', () => {
 		} );
 
 		expect( editorEvidence.computedColor ).toBe( expected );
-		expect( editorEvidence.className ).not.toContain(
-			'acl-trace-text-color-bridge'
+		expect( editorEvidence.className ).toContain(
+			'acl-block-opacity-compat-text'
 		);
 		expect( frontendEvidence.computedColor ).toBe( expected );
 		expect( frontendEvidence.className ).toContain(
-			'acl-trace-text-color-bridge'
+			'acl-block-opacity-compat-text'
 		);
+		expect( editorEvidence.className ).not.toContain( 'acl-trace-' );
+		expect( frontendEvidence.className ).not.toContain( 'acl-trace-' );
+		expect( saved.content.raw ).not.toContain( 'acl-block-opacity' );
 		expect( relevantThemeCss ).not.toHaveLength( 0 );
 	} );
 

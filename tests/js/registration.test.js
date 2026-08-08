@@ -7,6 +7,10 @@ jest.mock( '@wordpress/hooks', () => ( {
 	addFilter: jest.fn(),
 } ) );
 
+jest.mock( '@wordpress/block-editor', () => ( {
+	useSettings: jest.fn(),
+} ) );
+
 jest.mock( '@wordpress/blocks', () => ( {
 	getBlockType: jest.fn(),
 } ) );
@@ -46,15 +50,19 @@ function setup( { incompatibleBlocks = new Set() } = {} ) {
 
 describe( 'editor.BlockEdit registration', () => {
 	test( 'registers under the unique plugin namespace', () => {
+		const blockEditCalls = addFilter.mock.calls.filter(
+			( call ) => call[ 0 ] === 'editor.BlockEdit'
+		);
+
 		expect( FILTER_NAMESPACE ).toBe(
 			'acl-block-opacity/with-opacity-controls'
 		);
-		expect( addFilter ).toHaveBeenCalledTimes( 1 );
-		expect( addFilter ).toHaveBeenCalledWith(
+		expect( blockEditCalls ).toHaveLength( 1 );
+		expect( blockEditCalls[ 0 ] ).toEqual( [
 			'editor.BlockEdit',
 			FILTER_NAMESPACE,
-			expect.any( Function )
-		);
+			expect.any( Function ),
+		] );
 	} );
 
 	test( 'renders the original BlockEdit exactly once', () => {

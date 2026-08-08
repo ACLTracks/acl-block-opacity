@@ -6,6 +6,7 @@ import { getBlockType } from '@wordpress/blocks';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
 
+import './compatibility-preview';
 import { OpacityControls } from './components/opacity-controls';
 import { getBlockNameGate, getColorEligibility } from './utils/eligibility';
 

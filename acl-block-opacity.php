@@ -19,6 +19,7 @@ defined( 'ABSPATH' ) || exit;
 
 require_once __DIR__ . '/includes/class-assets.php';
 require_once __DIR__ . '/includes/class-color-value.php';
+require_once __DIR__ . '/includes/class-text-collision-detector.php';
 require_once __DIR__ . '/includes/class-compatibility-bridge.php';
 require_once __DIR__ . '/includes/class-plugin.php';
 

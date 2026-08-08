@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "color": {
+      "defaultPalette": false,
+      "palette": [
+        {
+          "color": "#445566",
+          "name": "Global Contrast Fixture",
+          "slug": "contrast"
+        }
+      ]
+    },
+    "blocks": {
+      "acl-opacity-e2e/standard-color": {
+        "color": {
+          "palette": [
+            {
+              "color": "#112233",
+              "name": "Block Context Text Collision",
+              "slug": "text"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
