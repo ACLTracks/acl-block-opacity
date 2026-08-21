@@ -2,8 +2,8 @@
 Contributors: ashescreativelabs
 Tags: blocks, color, opacity, editor, accessibility
 Requires at least: 6.8
-Tested up to: 7.0
-Stable tag: 1.0.1
+Tested up to: 7.1
+Stable tag: 1.0.2
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -24,9 +24,12 @@ The compatibility bridge deliberately does not search descendants. For blocks su
 
 The plugin has no settings screen, options, custom database tables, post or user metadata, telemetry, external service, remote request, or frontend JavaScript. Deactivation leaves standard block content valid. If the active theme has the `text`-slug collision, its visual conflict can return while the plugin is inactive and is corrected again after reactivation. Nothing plugin-specific requires cleanup on uninstall.
 
-The version 1.0.0 runtime was qualified on WordPress 6.8.7, 6.9.6, and 7.0.3; PHP 8.0.30 through 8.5.9; current Twenty Twenty-Five and Twenty Twenty-Four; ACL Trace 3.0.9; BlankSlate; and controlled palette fixtures. Version 1.0.1 preserves that runtime unchanged. This is a tested compatibility matrix, not a claim of universal theme compatibility.
+The version 1.0.0 runtime was qualified on WordPress 6.8.7, 6.9.6, and 7.0.3; PHP 8.0.30 through 8.5.9; current Twenty Twenty-Five and Twenty Twenty-Four; ACL Trace 3.0.9; BlankSlate; and controlled palette fixtures. Versions 1.0.1 and 1.0.2 preserve that runtime unchanged. This is a tested compatibility matrix, not a claim of universal theme compatibility.
 
 == Changelog ==
+
+= 1.0.2 =
+* Updates WordPress 7.1 compatibility metadata for Plugin Directory submission; changes no runtime plugin behavior.
 
 = 1.0.1 =
 * Replaces the abbreviated license notice with the complete canonical GNU GPL version 2 text.

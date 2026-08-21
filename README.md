@@ -1,10 +1,10 @@
 # ACL Opacity Controls for Blocks
 
-ACL Opacity Controls for Blocks is a standalone WordPress plugin project by Ashes Creative Labs. Its current public version is 1.0.1, which preserves the qualified 1.0.0 text and background opacity behavior for eligible blocks through standard WordPress color attributes.
+ACL Opacity Controls for Blocks is a standalone WordPress plugin project by Ashes Creative Labs. Its current public version is 1.0.2, which preserves the qualified 1.0.0 text and background opacity behavior for eligible blocks through standard WordPress color attributes.
 
 ## Release status
 
-Version 1.0.0 completed its Phase 6 compatibility qualification and was the initial public GitHub release. Version 1.0.1 carries that runtime forward unchanged while reconciling the canonical license text and repository publication documentation. The current release contains:
+Version 1.0.0 completed its Phase 6 compatibility qualification and was the initial public GitHub release. Versions 1.0.1 and 1.0.2 carry that runtime forward unchanged; 1.0.1 reconciled the canonical license text and repository publication documentation, and 1.0.2 updates WordPress 7.1 compatibility metadata for Plugin Directory submission. The current release contains:
 
 - strict JavaScript and PHP RGB color parsing and deterministic formatting;
 - pure standard-attribute persistence utilities;
@@ -30,7 +30,7 @@ Plugin deactivation preserves valid standard block content, but a broken theme's
 
 The qualified compatibility floor is WordPress 6.8 and PHP 8.0. Runtime and browser validation covered WordPress 6.8.7, 6.9.6, and 7.0.3; PHP 8.0.30, 8.1.34, 8.2.29, 8.3.33, 8.4.24, and 8.5.9; Twenty Twenty-Five 1.5, Twenty Twenty-Four 1.5, ACL Trace 3.0.9, BlankSlate 2026, and controlled palette fixtures. This matrix does not claim universal theme compatibility.
 
-The plugin has no settings screen, plugin-specific options, custom tables, post or user metadata, telemetry, external service, remote request, or frontend JavaScript. The canonical repository is [ACLTracks/acl-block-opacity](https://github.com/ACLTracks/acl-block-opacity), and GitHub releases are published there. Version 1.0.0 was the initial public GitHub release; version 1.0.1 is a metadata and license maintenance release. WordPress.org publication has not occurred.
+The plugin has no settings screen, plugin-specific options, custom tables, post or user metadata, telemetry, external service, remote request, or frontend JavaScript. The canonical repository is [ACLTracks/acl-block-opacity](https://github.com/ACLTracks/acl-block-opacity), and GitHub releases are published there. Version 1.0.0 was the initial public GitHub release; versions 1.0.1 and 1.0.2 are metadata-only maintenance releases. WordPress.org publication has not occurred.
 
 ## Persistence contract
 
@@ -44,9 +44,9 @@ When a preset is converted, its current resolved color becomes a literal standar
 
 The earlier ACL Trace experiment is reference material only and is not the release source. This standalone project does not require ACL Trace.
 
-## Version 1.0.1 exclusions
+## Version 1.0.2 exclusions
 
-Version 1.0.1 does not include whole-block, border, gradient, image, or hover opacity; animation; page-builder integrations; premium features; accounts; telemetry; or remote services.
+Version 1.0.2 does not include whole-block, border, gradient, image, or hover opacity; animation; page-builder integrations; premium features; accounts; telemetry; or remote services.
 
 ## License
 

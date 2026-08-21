@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ACL Opacity Controls for Blocks
  * Description: Adds text and background opacity controls to eligible blocks using standard WordPress color attributes.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Requires at least: 6.8
  * Requires PHP: 8.0
  * Author: Ashes Creative Labs
